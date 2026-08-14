@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>戈鸽不鸽 | 个人主页</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        :root {
+            --primary: #fb7299;
+            --primary-dark: #e55d85;
+            --bg: #16161d;
+            --bg-card: #1e1e28;
+            --bg-card-hover: #262633;
+            --text: #e8e8f0;
+            --text-secondary: #9999aa;
+            --border: rgba(255,255,255,0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            /* Subtle noise texture to make bg feel natural, not AI-generated */
+            background-image: 
+                radial-gradient(ellipse at 20% 0%, rgba(251,114,153,0.04), transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(79,209,197,0.03), transparent 50%);
+        }
+
+        /* ============ NAV ============ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(22, 22, 29, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* ============ PROFILE HEADER ============ */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 100px 5% 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .profile-avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            border: 3px solid rgba(251,114,153,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .profile-name {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ SECTIONS ============ */
+        section {
+            padding: 30px 5% 90px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 14px;
+        }
+
+        .section-title span { color: var(--primary); }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            margin-bottom: 44px;
+        }
+
+        /* ============ ABOUT ============ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .about-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            color: var(--primary);
+        }
+
+        .about-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            min-width: 72px;
+        }
+
+        .info-value { font-weight: 500; }
+
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 14px;
+        }
+
+        .about-text strong { color: var(--text); }
+
+        /* ============ CONTACT ============ */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-section h2 span { color: var(--primary); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 32px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--brand-color, var(--primary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            border-color: var(--brand-color, var(--primary));
+        }
+
+        .contact-card:hover::before { transform: scaleX(1); }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--brand-bg, rgba(251,114,153,0.12));
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            background: var(--brand-color, var(--primary));
+        }
+
+        .contact-card:hover .contact-icon svg {
+            fill: white !important;
+            color: white !important;
+        }
+
+        .contact-icon svg {
+            transition: all 0.3s ease;
+        }
+
+        .contact-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .contact-id {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        /* Brand colors */
+        .contact-card.bili { --brand-color: #fb7299; --brand-bg: rgba(251,114,153,0.12); }
+        .contact-card.xhs  { --brand-color: #ff2442; --brand-bg: rgba(255,36,66,0.10); }
+        .contact-card.xhs .contact-icon svg text { transition: fill 0.3s ease; }
+        .contact-card.xhs:hover .contact-icon svg text { fill: white; }
+        .contact-card.dy   { --brand-color: #000000; --brand-bg: rgba(255,255,255,0.08); }
+        .contact-card.dy:hover .contact-icon { background: #000; }
+        .contact-card.qq   { --brand-color: #12b7f5; --brand-bg: rgba(18,183,245,0.12); }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            color: var(--text);
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            text-align: center;
+            padding: 36px 5%;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .profile-avatar {
+                width: 72px;
+                height: 72px;
+            }
+            .profile-header {
+                padding: 80px 5% 0;
+                gap: 14px;
+            }
+            section { padding: 24px 5% 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">主页</div>
+    <ul class="nav-links">
+        <li><a href="#about">关于</a></li>
+        <li><a href="#contact">联系</a></li>
+    </ul>
+</nav>
+
+<!-- PROFILE HEADER -->
+<div class="profile-header">
+    <img class="profile-avatar" src="https://i1.hdslb.com/bfs/face/62f21ced60d92de2e841b5d212985f48d62532e8.jpg" alt="头像">
+    <h1 class="profile-name">戈鸽不鸽</h1>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+    <h2 class="section-title">关于<span>我</span></h2>
+    <p class="section-subtitle">一个在B站折腾各种创意的普通创作者</p>
+    <div class="about-grid">
+        <div class="about-card">
+            <h3>基本信息</h3>
+            <div class="about-info">
+                <div class="info-row">
+                    <span class="info-label">昵称</span>
+                    <span class="info-value">戈鸽不鸽</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">B站UID</span>
+                    <span class="info-value">1028644270</span>
+                </div>
+                <div class="info-row" style="border:none;">
+                    <span class="info-label">平台</span>
+                    <span class="info-value">B站 / 小红书 / 抖音</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-text">
+            <p>
+                大家好，我是<strong>戈鸽不鸽</strong>，一个在B站折腾各种创意的创作者。
+            </p>
+            <p>
+                我喜欢尝试各种不同的内容形式——从<strong>编程整活</strong>（当刚学完Python的人写C++会怎样？）到<strong>互动视频</strong>（你的目标，活下去！），再到<strong>校园生活段子</strong>，什么有趣就做什么。
+            </p>
+            <p>
+                名字叫"戈鸽不鸽"，但<strong>绝不鸽</strong>。持续创作中，感谢每一个关注和支持的人！
+            </p>
+            <p>
+                除了B站，我也入驻了小红书和抖音，多平台同步更新。如果你喜欢我的内容，欢迎关注~
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <h2 class="section-title">联系<span>我</span></h2>
+    <p class="section-subtitle">来各个平台找我玩~</p>
+    <div class="contact-grid">
+        <!-- B站 -->
+        <a href="https://space.bilibili.com/1028644270" target="_blank" class="contact-card bili">
+            <div class="contact-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#fb7299">
+                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.764-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.249-.56.373-.933.373s-.684-.124-.933-.373c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.387-.947.258-.257.578-.386.96-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.249-.56.373-.933.373s-.684-.124-.933-.373c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                </svg>
+            </div>
+            <span class="contact-name">B站</span>
+            <span class="contact-id">UID: 1028644270</span>
+        </a>
+
+        <!-- 小红书 -->
+        <a href="https://www.xiaohongshu.com/user/profile/94336892635" target="_blank" class="contact-card xhs">
+            <div class="contact-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24">
+                    <text x="12" y="12" text-anchor="middle" dominant-baseline="central" font-size="16" fill="#ff2442" font-weight="900" font-family="'Noto Sans SC', sans-serif">书</text>
+                </svg>
+            </div>
+            <span class="contact-name">小红书</span>
+            <span class="contact-id">小红书号: 94336892635</span>
+        </a>
+
+        <!-- 抖音 -->
+        <a href="https://www.douyin.com/user/44026854725" target="_blank" class="contact-card dy">
+            <div class="contact-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#e8e8f0">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/>
+                </svg>
+            </div>
+            <span class="contact-name">抖音</span>
+            <span class="contact-id">抖音号: 44026854725</span>
+        </a>
+
+        <!-- QQ粉丝群 -->
+        <a href="javascript:void(0)" onclick="copyQQGroup()" class="contact-card qq">
+            <div class="contact-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#12b7f5">
+                    <path d="M21.395 15.035a39.548 39.548 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 16.352 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a39.547 39.547 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.476 2.103-2.476 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.189 1.6.18 7.14.389 7.483-.189.077-.132.132-.458-.301-.778-.482-.356-1.233-.646-1.845-.835 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.541 2.103 2.476.251-.03.581-1.39-.438-4.673z"/>
+                </svg>
+            </div>
+            <span class="contact-name">QQ粉丝群</span>
+            <span class="contact-id">群号: 729977289 (点击复制)</span>
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>
+        <a href="https://space.bilibili.com/1028644270" target="_blank">B站 UID: 1028644270</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.xiaohongshu.com/user/profile/94336892635" target="_blank">小红书号: 94336892635</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.douyin.com/user/44026854725" target="_blank">抖音号: 44026854725</a>
+        &nbsp;·&nbsp;
+        QQ群: 729977289
+    </p>
+    <p style="margin-top:8px;">&copy; 2026 戈鸽不鸽 · 永不鸽</p>
+</footer>
+
+<script>
+    // Nav shrink on scroll
+    window.addEventListener('scroll', function() {
+        var nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.style.padding = '10px 5%';
+        } else {
+            nav.style.padding = '16px 5%';
+        }
+    });
+
+    // Fade-in animation on scroll
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.about-card, .contact-card').forEach(function(el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // ============ QQ Group Copy ============
+    function copyQQGroup() {
+        var groupNumber = '729977289';
+        var textarea = document.createElement('textarea');
+        textarea.value = groupNumber;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            showToast('QQ群号 ' + groupNumber + ' 已复制！打开QQ搜索群号加入');
+        } catch(e) {
+            showToast('复制失败，请手动复制群号: ' + groupNumber);
+        }
+        document.body.removeChild(textarea);
+    }
+
+    function showToast(msg) {
+        var existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+        var toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(function() { toast.classList.add('show'); }, 10);
+        setTimeout(function() {
+            toast.classList.remove('show');
+            setTimeout(function() { toast.remove(); }, 400);
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
